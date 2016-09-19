@@ -1,0 +1,6 @@
+[
+null,
+{"id":1,"battlerName":"1043501","characterIndex":0,"characterName":"Cocoa","classId":1,"equips":[2,2,12,3],"faceIndex":3,"faceName":"Cocoa","traits":[{"code":11,"dataId":1,"value":1.3},{"code":11,"dataId":3,"value":0.7}],"initialLevel":1,"maxLevel":10,"name":"ココア","nickname":"","note":"","profile":"世界樹の町へ引っ越してきた魔法使いの卵。\nちょっぴり泣き虫だけど心優しく芯の強い女の子。"},
+{"id":2,"battlerName":"1005601","characterIndex":0,"characterName":"Caputinno","classId":2,"equips":[12,2,12,3],"faceIndex":0,"faceName":"Cappucino","traits":[{"code":11,"dataId":3,"value":1.3},{"code":11,"dataId":2,"value":0.7}],"initialLevel":1,"maxLevel":10,"name":"カプチーノ","nickname":"","note":"","profile":"世界樹の町で生まれ育った少女。\n楽天的で食い意地の張ったアホの子。"},
+{"id":3,"battlerName":"1041601","characterIndex":0,"characterName":"Milk","classId":3,"equips":[21,2,12,3],"faceIndex":0,"faceName":"Milk","traits":[{"code":11,"dataId":2,"value":1.3},{"code":11,"dataId":1,"value":0.7}],"initialLevel":1,"maxLevel":10,"name":"ミルク","nickname":"","note":"","profile":"世界樹の町に住むカプチーノの幼馴染。\n冷静で頭もいいが天然でお菓子大好き。"}
+]
