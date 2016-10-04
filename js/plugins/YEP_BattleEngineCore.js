@@ -11,7 +11,7 @@ Yanfly.BEC = Yanfly.BEC || {};
 
 //=============================================================================
  /*:
- * @plugindesc v1.39 Have more control over the flow of the battle system
+ * @plugindesc v1.39b Have more control over the flow of the battle system
  * with this plugin and alter various aspects to your liking.
  * @author Yanfly Engine Plugins
  *
@@ -648,9 +648,10 @@ Yanfly.BEC = Yanfly.BEC || {};
  * Changelog
  * ============================================================================
  *
- * Version 1.39:
+ * Version 1.39b:
  * - Fixed a bug that caused dead actors to not be a part of action sequence
  * targeting for "Not Focus".
+ * - Optimization update.
  *
  * Version 1.38a:
  * - Optimization update.
@@ -1543,6 +1544,11 @@ BattleManager.processAbort = function() {
     Yanfly.BEC.BattleManager_processAbort.call(this);
 };
 
+BattleManager.refreshAllMembers = function() {
+  $gameParty.refreshMembers();
+  $gameTroop.refreshMembers();
+};
+
 BattleManager.startTurn = function() {
     this._enteredEndPhase = false;
     this._phase = 'turn';
@@ -1568,6 +1574,7 @@ BattleManager.endTurn = function() {
     }
     this._enteredEndPhase = true;
     Yanfly.BEC.BattleManager_endTurn.call(this);
+    BattleManager.refreshAllMembers();
 };
 
 BattleManager.getNextSubject = function() {
@@ -1640,11 +1647,12 @@ BattleManager.updateEvent = function() {
 };
 
 BattleManager.queueForceAction = function(user, skillId, target) {
+    var targetIndex = (target !== undefined) ? target.index() : 0;
     var param = [
       user.isEnemy() ? 0 : 1,
       user.isActor() ? user.actorId() : user.index(),
       skillId,
-      target
+      targetIndex
     ];
     var command = {
       code: 339,
@@ -4088,7 +4096,10 @@ Game_Unit.prototype.onTurnStart = function() {
     var max = this.members().length;
     for (var i = 0; i < max; ++i) {
       var member = this.members()[i];
-      if (member) member.onTurnStart();
+      if (member) {
+        member.onTurnStart();
+        member.refresh();
+      }
     }
 };
 
@@ -4097,6 +4108,15 @@ Game_Unit.prototype.updateTick = function() {
     for (var i = 0; i < max; ++i) {
       var member = this.members()[i];
       if (member) member.updateTick();
+    }
+};
+
+Game_Unit.prototype.refreshMembers = function() {
+    var group = this.allMembers();
+    var length = group.length;
+    for (var i = 0; i < length; ++i) {
+      var member = group[i];
+      if (member) member.refresh();
     }
 };
 
@@ -4109,6 +4129,14 @@ Game_Party.prototype.performEscapeSuccess = function() {
       var member = this.members()[i];
       if (member) member.performEscapeSuccess();
     }
+};
+
+//=============================================================================
+// Game_Troop
+//=============================================================================
+
+Game_Troop.prototype.allMembers = function() {
+  return this.members();
 };
 
 //=============================================================================

@@ -11,7 +11,7 @@ Yanfly.Core = Yanfly.Core || {};
 
 //=============================================================================
 /*:
- * @plugindesc v1.17 Needed for the majority of Yanfly Engine Scripts. Also
+ * @plugindesc v1.18 Needed for the majority of Yanfly Engine Scripts. Also
  * contains bug fixes found inherently in RPG Maker.
  * @author Yanfly Engine Plugins
  *
@@ -449,6 +449,9 @@ Yanfly.Core = Yanfly.Core || {};
  * ============================================================================
  * Changelog
  * ============================================================================
+ *
+ * Version 1.18:
+ * - Fixed a bug with scaling battlebacks not working properly for Front View.
  *
  * Version 1.17:
  * - Updated for RPG Maker MV version 1.3.0.
@@ -1087,6 +1090,9 @@ Spriteset_Battle.prototype.locateBattleback = function() {
     if (this._rescaledBattlebackSprite) return;
     this._rescaledBattlebackSprite = true;
     Yanfly.Core.Spriteset_Battle_locateBattleback.call(this);
+    var height = this._battleField.height;
+    sprite1.origin.y = sprite1.x + sprite1.bitmap.height - height;
+    sprite2.origin.y = sprite1.y + sprite2.bitmap.height - height;
     this.rescaleBattlebacks();
 };
 
