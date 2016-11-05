@@ -11,7 +11,7 @@ Yanfly.BEC = Yanfly.BEC || {};
 
 //=============================================================================
  /*:
- * @plugindesc v1.39b Have more control over the flow of the battle system
+ * @plugindesc v1.40 Have more control over the flow of the battle system
  * with this plugin and alter various aspects to your liking.
  * @author Yanfly Engine Plugins
  *
@@ -648,10 +648,14 @@ Yanfly.BEC = Yanfly.BEC || {};
  * Changelog
  * ============================================================================
  *
- * Version 1.39b:
+ * Version 1.40:
+ * - Updated for RPG Maker MV version 1.3.2.
+ *
+ * Version 1.39c:
  * - Fixed a bug that caused dead actors to not be a part of action sequence
  * targeting for "Not Focus".
  * - Optimization update.
+ * - Updated "queueForceAction" to utilize both numbers and actual targets.
  *
  * Version 1.38a:
  * - Optimization update.
@@ -1647,7 +1651,13 @@ BattleManager.updateEvent = function() {
 };
 
 BattleManager.queueForceAction = function(user, skillId, target) {
-    var targetIndex = (target !== undefined) ? target.index() : 0;
+    if (target === undefined) {
+      var targetIndex = 0;
+    } else if (typeof target === 'number') {
+      var targetIndex = target;
+    } else {
+      var targetIndex = target.index();
+    }
     var param = [
       user.isEnemy() ? 0 : 1,
       user.isActor() ? user.actorId() : user.index(),
@@ -1800,7 +1810,7 @@ BattleManager.invokeCounterAttack = function(subject, target) {
     this._logWindow.displayCounter(target);
     action.setAttack();
     action.apply(subject);
-    this._logWindow.displayActionResults(subject, subject);
+    this._logWindow.displayActionResults(target, subject);
     if (subject.isDead()) subject.performCollapse();
 };
 

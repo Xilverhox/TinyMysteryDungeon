@@ -11,7 +11,7 @@ Yanfly.ASP2 = Yanfly.ASP2 || {};
 
 //=============================================================================
  /*:
- * @plugindesc v1.10 (Requires YEP_BattleEngineCore.js) Visual functions
+ * @plugindesc v1.11 (Requires YEP_BattleEngineCore.js) Visual functions
  * are added to the Battle Engine Core's action sequences.
  * @author Yanfly Engine Plugins
  *
@@ -429,6 +429,9 @@ Yanfly.ASP2 = Yanfly.ASP2 || {};
  * Changelog
  * ============================================================================
  *
+ * Version 1.11:
+ * - Fixed a bug that caused enemies to not mirror the attack animation.
+ *
  * Version 1.10a:
  * - Fixed a bug that caused scaled enemies to have their state icons and
  * overlays appear in odd places.
@@ -577,7 +580,7 @@ BattleManager.actionAttackAnimation = function(actionArgs) {
   var targets = this.makeActionTargets(actionArgs[0]);
   var mirror = false;
   if (actionArgs[1] && actionArgs[1].toUpperCase() === 'MIRROR') mirror = true;
-  if (mirror && this._subject.isActor()) {
+  if (mirror) {
     this._logWindow.showActorAtkAniMirror(this._subject,
       targets.filter(Yanfly.Util.onlyUnique));
   } else {
@@ -735,7 +738,7 @@ BattleManager.actionFloat = function(name, actionArgs) {
     var cmd = actionArgs[0];
     var frames = actionArgs[1] || 12;
     var pixels = 0;
-    if (cmd.match(/(\d+)([%Åì])/i)) {
+    if (cmd.match(/(\d+)([%ÔºÖ])/i)) {
       var floatPeak = parseFloat(RegExp.$1 * 0.01);
     } else if (cmd.match(/(\d+)/i)) {
       pixels = parseInt(RegExp.$1);
@@ -756,7 +759,7 @@ BattleManager.actionJump = function(name, actionArgs) {
     var cmd = actionArgs[0];
     var frames = actionArgs[1] || 12;
     var pixels = 0;
-    if (cmd.match(/(\d+)([%Åì])/i)) {
+    if (cmd.match(/(\d+)([%ÔºÖ])/i)) {
       var jumpPeak = parseFloat(RegExp.$1 * 0.01);
     } else if (cmd.match(/(\d+)/i)) {
       pixels = parseInt(RegExp.$1);
@@ -990,7 +993,7 @@ BattleManager.actionOpacity = function(name, actionArgs) {
     if (targets.length < 1) return true;
     var cmd = actionArgs[0];
     var frames = actionArgs[1] || 12;
-    if (cmd.match(/(\d+)([%Åì])/i)) {
+    if (cmd.match(/(\d+)([%ÔºÖ])/i)) {
       var opacity = parseInt(RegExp.$1 * 0.01 * 255).clamp(0, 255);
     } else if (cmd.match(/(\d+)/i)) {
       var opacity = parseInt(RegExp.$1);

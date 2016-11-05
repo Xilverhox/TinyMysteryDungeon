@@ -11,7 +11,7 @@ Yanfly.SVE = Yanfly.SVE || {};
 
 //=============================================================================
  /*:
- * @plugindesc v1.14 (Requires YEP_BattleEngineCore.js) This plugin lets
+ * @plugindesc v1.15 (Requires YEP_BattleEngineCore.js) This plugin lets
  * you use Animated Sideview Actors for enemies!
  * @author Yanfly Engine Plugins
  *
@@ -713,6 +713,9 @@ Yanfly.SVE = Yanfly.SVE || {};
  * Changelog
  * ============================================================================
  *
+ * Version 1.15:
+ * - Updated for RPG Maker MV version 1.3.2.
+ *
  * Version 1.14:
  * - Pixi4 update to fix bug that caused state icons to fly off the screen.
  * - Fixed a compatibility issue with YEP_X_VisualStateFX regarding state
@@ -892,12 +895,12 @@ DataManager.processSVENotetags1 = function(group) {
 
     for (var i = 0; i < notedata.length; i++) {
       var line = notedata[i];
-       if (line.match(/<(?:SCALE SPRITE):[ ](\d+)([%“])>/i)) {
+       if (line.match(/<(?:SCALE SPRITE):[ ](\d+)([%ï¼…])>/i)) {
         obj.spriteScaleX = parseFloat(RegExp.$1) * 0.01;
         obj.spriteScaleY = obj.spriteScaleX;
-      } else if (line.match(/<(?:SCALE SPRITE WIDTH):[ ](\d+)([%“])>/i)) {
+      } else if (line.match(/<(?:SCALE SPRITE WIDTH):[ ](\d+)([%ï¼…])>/i)) {
         obj.spriteScaleX = parseFloat(RegExp.$1) * 0.01;
-      } else if (line.match(/<(?:SCALE SPRITE HEIGHT):[ ](\d+)([%“])>/i)) {
+      } else if (line.match(/<(?:SCALE SPRITE HEIGHT):[ ](\d+)([%ï¼…])>/i)) {
         obj.spriteScaleY = parseFloat(RegExp.$1) * 0.01;
       } else if (line.match(/<(?:SIDEVIEW BATTLER):[ ](.*)>/i)) {
         obj.sideviewBattler.push(String(RegExp.$1));
@@ -950,9 +953,9 @@ DataManager.processSVENotetags1 = function(group) {
         obj.sideviewShadowShow = true;
       } else if (line.match(/<(?:SIDEVIEW HIDE SHADOW)>/i)) {
         obj.sideviewShadowShow = false;
-      } else if (line.match(/<(?:SIDEVIEW SHADOW WIDTH):[ ](\d+)([%“])>/i)) {
+      } else if (line.match(/<(?:SIDEVIEW SHADOW WIDTH):[ ](\d+)([%ï¼…])>/i)) {
         obj.sideviewShadowScaleX = parseFloat(RegExp.$1 * 0.01);
-      } else if (line.match(/<(?:SIDEVIEW SHADOW HEIGHT):[ ](\d+)([%“])>/i)) {
+      } else if (line.match(/<(?:SIDEVIEW SHADOW HEIGHT):[ ](\d+)([%ï¼…])>/i)) {
         obj.sideviewShadowScaleY = parseFloat(RegExp.$1 * 0.01);
       } else if (line.match(/<(?:SIDEVIEW FRAME SPEED):[ ](\d+)>/i)) {
         obj.sideviewFrameSpeed = parseInt(RegExp.$1);
@@ -1606,7 +1609,7 @@ Sprite_Enemy.prototype.updateSVFrame = function() {
     if (this._effectType === 'bossCollapse') {
       cdh = ch - this._effectDuration;
     }
-    this.setFrame(cx * cw, cy * ch, cw, ch);
+    // this.setFrame(cx * cw, cy * ch, cw, ch);
     this._mainSprite.setFrame(cx * cw, cy * ch, cw, ch - cdh);
     this.adjustMainBitmapSettings(bitmap);
     this.adjustSVShadowSettings();
